@@ -1,0 +1,15 @@
+[mm,nn]=size(input);
+D(1,:)=ones(1,nn)/nn;
+K=10;
+for i=1:K
+    t=3*i-2;
+    error(i)=0;
+    net=newff(minmax(input),[30,20,10],{'tansing','purelin'},'trainlm');
+    net.trainParam.epochs=500;
+    net.trainParam.lr=0.01;
+    net.trainParam.goal=0.0001;
+    net.trainParam.max_fail=6;
+    [net,tr]=train(net,inputn,outputn);%训练网络（网络对象，归一化后的输入，归一化后的输出）
+    
+    an1=sim(net,input);
+    ts1(t:t+2,:)=an1;
